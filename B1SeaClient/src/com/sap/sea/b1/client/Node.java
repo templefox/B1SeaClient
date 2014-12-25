@@ -2,6 +2,8 @@ package com.sap.sea.b1.client;
 
 import org.glassfish.jersey.client.JerseyWebTarget;
 
+import com.sap.sea.b1.client.island.Island;
+
 public class Node {
 	private static final String SUB_PATH = "/node";
 	private String path;
