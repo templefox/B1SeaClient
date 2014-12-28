@@ -10,6 +10,7 @@ import com.sap.sea.b1.client.SeaClient;
 public abstract class Island {
 
 	protected String path;
+	private String host;
 
 	protected Island(String path) {
 		this.path = path;
@@ -27,6 +28,14 @@ public abstract class Island {
 		}else {
 			return false;
 		}
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	protected void setHost(String host) {
+		this.host = host;
 	}
 
 }

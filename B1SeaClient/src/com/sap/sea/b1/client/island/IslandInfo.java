@@ -16,9 +16,4 @@ public class IslandInfo {
 	public void sethost(String host) {
 		this.host = host;
 	}
-
-	@Deprecated
-	public Island fromSea(SeaClient client) {
-		return new TargetedIsland(client,this);
-	}
 }
