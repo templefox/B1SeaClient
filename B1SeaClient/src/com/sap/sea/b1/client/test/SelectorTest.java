@@ -1,6 +1,7 @@
 package com.sap.sea.b1.client.test;
 
 import org.junit.Assert;
+import static com.sap.sea.b1.client.test.IslandNodeTest.HOST;
 import org.junit.Test;
 
 import com.sap.sea.b1.client.SeaClient;
@@ -12,7 +13,7 @@ public class SelectorTest {
 
 	@Test
 	public void RandomSelectorPingTest(){
-		SeaClient client = new SeaClient("localhost:8080");
+		SeaClient client = new SeaClient(HOST);
 		
 		Island island = client.select(new RandomSelector());
 		
@@ -22,7 +23,7 @@ public class SelectorTest {
 	
 	@Test
 	public void FilterSelectorPingTest(){
-		SeaClient client = new SeaClient("localhost:8080");
+		SeaClient client = new SeaClient(HOST);
 		
 		InconstantIsland island = client.select(new FilterSelector(0L));
 		

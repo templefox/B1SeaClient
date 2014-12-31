@@ -1,6 +1,7 @@
 package com.sap.sea.b1.client.test;
 
 import org.junit.Assert;
+import static com.sap.sea.b1.client.test.IslandNodeTest.HOST;
 import org.junit.Test;
 
 import com.sap.sea.b1.client.Hub;
@@ -11,7 +12,7 @@ public class HubTest {
 
 	@Test
 	public void getSetHubTest() {
-		SeaClient client = new SeaClient("localhost:8080");
+		SeaClient client = new SeaClient(HOST);
 		Hub hub = client.getHub();
 		
 		String host = hub.getHost();

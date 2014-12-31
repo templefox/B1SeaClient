@@ -14,18 +14,14 @@ import com.sap.sea.b1.client.island.TargetedIsland;
 
 public class IslandNodeTest {
 	
-	@Test
-	public void initializeTest(){
-		SeaClient client = new SeaClient("localhost:8080");
-		
-		Set<TargetedIsland> islands = client.getIslands();
-		
-		Assert.assertTrue(islands.size()>0);
-	}
+	public static final String HOST = "10.58.77.129:20050";
 	
+	/**
+	 * island.ping();
+	 */
 	@Test
 	public void pingTest(){
-		SeaClient client = new SeaClient("localhost:8080");
+		SeaClient client = new SeaClient(HOST);
 
 		Set<? extends Island> islands = client.getIslands();
 		
@@ -36,14 +32,32 @@ public class IslandNodeTest {
 		}
 	}
 	
+	/**
+	 * island.node().getHostName()
+	 */
+	@Test
+	public void hostnameTest(){
+		SeaClient client = new SeaClient(HOST);
+
+		Set<Island> islands = client.getIslands();
+		
+		for (Island targetedIsland : islands) {
+			Assert.assertTrue(targetedIsland.node().getHostName()!=null);
+		}
+		
+	}
+	
+	/**
+	 * island.node().getMemUsed();
+	 */
 	@Test
 	public void nodeStatusTest(){
-		SeaClient client = new SeaClient("localhost:8080");
+		SeaClient client = new SeaClient(HOST);
 		
-		Set<TargetedIsland> islands = client.getIslands();
+		Set<Island> islands = client.getIslands();
 
-		for (Iterator<TargetedIsland> iterator = islands.iterator(); iterator.hasNext();) {
-			TargetedIsland island = iterator.next();
+		for (Iterator<Island> iterator = islands.iterator(); iterator.hasNext();) {
+			Island island = iterator.next();
 			
 			Node node = island.node();
 			double usage = node.getMemUsage();

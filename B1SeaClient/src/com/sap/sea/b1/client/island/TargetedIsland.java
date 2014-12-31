@@ -12,6 +12,7 @@ public class TargetedIsland extends Island{
 		setHost(info.gethost());		
 	}
 	
+	@Override
 	public Node node() {
 		if (node==null) {
 			node = new Node(this);

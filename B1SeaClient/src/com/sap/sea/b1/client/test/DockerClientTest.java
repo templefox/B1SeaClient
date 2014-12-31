@@ -9,6 +9,7 @@ import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.DockerException;
 import com.spotify.docker.client.ProgressHandler;
+import com.spotify.docker.client.DockerClient.ListImagesParam;
 import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerConfig;
 import com.spotify.docker.client.messages.ContainerCreation;
@@ -16,9 +17,10 @@ import com.spotify.docker.client.messages.Image;
 import com.spotify.docker.client.messages.ProgressMessage;
 
 public class DockerClientTest {
+	final String dockerhost = "http://10.58.136.164:7777";
 	@Test
 	public void SimpleTest() {
-		DockerClient client = new DefaultDockerClient("http://192.168.1.106:7777");
+		DockerClient client = new DefaultDockerClient(dockerhost);
 
 		try {
 			List<Image> images = client.listImages();
@@ -33,10 +35,23 @@ public class DockerClientTest {
 			Assert.fail();
 		}
 	}
+	
+	@Test
+	public void seaDockerTest(){
+		DockerClient client = new DefaultDockerClient("http://10.58.77.129:20050/island/10.58.136.166:7777/docker");
+		try {
+			List<Image> images = client.listImages();
+			Assert.assertTrue(images.size()>0);
+		} catch (DockerException | InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 
 	@Test
 	public void runTest() {
-		DockerClient client = new DefaultDockerClient("http://192.168.1.106:7777");
+		DockerClient client = new DefaultDockerClient(dockerhost);
 		try {
 			List<Image> images = client.listImages();
 			Image image = images.get(images.size() - 1);

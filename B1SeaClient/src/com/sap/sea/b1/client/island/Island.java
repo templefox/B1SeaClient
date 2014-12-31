@@ -5,11 +5,14 @@ import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.jersey.client.JerseyWebTarget;
 
+import com.sap.sea.b1.client.Docker;
+import com.sap.sea.b1.client.Node;
 import com.sap.sea.b1.client.SeaClient;
 
 public abstract class Island {
 
 	protected String path;
+	protected Docker docker;
 	private String host;
 
 	protected Island(String path) {
@@ -38,4 +41,12 @@ public abstract class Island {
 		this.host = host;
 	}
 
+	public abstract Node node();
+
+	public Docker docker(){
+		if (docker == null) {
+			docker = new Docker(this);
+		}
+		return docker;
+	}
 }
