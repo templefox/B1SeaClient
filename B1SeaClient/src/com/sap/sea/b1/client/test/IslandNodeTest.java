@@ -14,7 +14,7 @@ import com.sap.sea.b1.client.island.TargetedIsland;
 
 public class IslandNodeTest {
 	
-	public static final String HOST = "10.58.77.129:20050";
+	public static final String HOST = "localhost:8080/Sea";
 	
 	/**
 	 * island.ping();

@@ -17,7 +17,7 @@ import com.spotify.docker.client.messages.Image;
 import com.spotify.docker.client.messages.ProgressMessage;
 
 public class DockerClientTest {
-	final String dockerhost = "http://10.58.136.164:7777";
+	final String dockerhost = "http://192.168.1.106:7777";
 	@Test
 	public void SimpleTest() {
 		DockerClient client = new DefaultDockerClient(dockerhost);
@@ -38,7 +38,7 @@ public class DockerClientTest {
 	
 	@Test
 	public void seaDockerTest(){
-		DockerClient client = new DefaultDockerClient("http://10.58.77.129:20050/island/10.58.136.166:7777/docker");
+		DockerClient client = new DefaultDockerClient("http://localhost:8080/Sea/island/192.168.1.106:7777/docker");
 		try {
 			List<Image> images = client.listImages();
 			Assert.assertTrue(images.size()>0);
