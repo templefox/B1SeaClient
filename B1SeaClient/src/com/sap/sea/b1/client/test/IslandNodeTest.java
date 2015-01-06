@@ -14,7 +14,8 @@ import com.sap.sea.b1.client.island.TargetedIsland;
 
 public class IslandNodeTest {
 	
-	public static final String HOST = "localhost:8080/Sea";
+	//public static final String HOST = "localhost:8080/Sea";
+	public static final String HOST = "10.58.77.129:20050";
 	
 	/**
 	 * island.ping();
@@ -42,7 +43,7 @@ public class IslandNodeTest {
 		Set<Island> islands = client.getIslands();
 		
 		for (Island targetedIsland : islands) {
-			Assert.assertTrue(targetedIsland.node().getHostName()!=null);
+			Assert.assertTrue(targetedIsland.getHostName()!=null);
 		}
 		
 	}
@@ -59,14 +60,13 @@ public class IslandNodeTest {
 		for (Iterator<Island> iterator = islands.iterator(); iterator.hasNext();) {
 			Island island = iterator.next();
 			
-			Node node = island.node();
-			double usage = node.getMemUsage();
+			double usage = island.getMemUsage();
 			Assert.assertTrue(usage<1);
 			Assert.assertTrue(usage>0);
 			
-			long used = node.getMemUsed();
-			long total = node.getMemTotal();
-			long free = node.getMemFree();
+			long used = island.getMemUsed();
+			long total = island.getMemTotal();
+			long free = island.getMemFree();
 			
 			Assert.assertTrue(Math.ulp(total*0.1)==Math.ulp((used+free)*0.1));
 		}

@@ -39,21 +39,22 @@ public class BuildTest {
 
 	@Test
 	public void buildTest() {
-		SeaClient client = new SeaClient("localhost:8080/Sea");
-
-		IslandInfo info = new IslandInfo("192.168.1.106:7777");
+		//SeaClient client = new SeaClient("localhost:8080/Sea");
+		SeaClient client = new SeaClient("10.58.77.129:20050");
+		
+		
+		IslandInfo info = new IslandInfo("10.58.136.164:7777");
 
 		Island island = client.getIsland(info);
 
-		BuildLog log = island.node().build("/home/dockerbuild");
-		System.out.println(log);
+		BuildLog log = island.build("/home/dockerbuild");
 		Assert.assertFalse(log == null);
 
 		String id = log.getImageID();
 		Assert.assertFalse(id == null);
 		Assert.assertFalse(id.isEmpty());
 
-		List<String> removedImages = island.docker().removeImage(id);
+		List<String> removedImages = island.removeImage(id);
 		Assert.assertTrue(removedImages.get(0).startsWith(id));
 	}
 }
