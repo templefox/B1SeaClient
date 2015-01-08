@@ -23,8 +23,12 @@ public class Docker {
 	private String path;
 	private DockerClient client;
 
-	public Docker(Island island) {
-		path = island.getPath() + SUB_PATH;
+	public Docker(Island island, Integer uid) {
+		if (uid == null) {
+			path = island.getPath() + SUB_PATH + "/null";
+		} else {
+			path = island.getPath() + SUB_PATH + "/" + uid.toString();
+		}
 		client = new DefaultDockerClient(path);
 	}
 
@@ -57,9 +61,9 @@ public class Docker {
 		}
 	}
 
-	public void removeContainer(String id) {
+	public void removeContainer(String id, boolean force) {
 		try {
-			client.removeContainer(id);
+			client.removeContainer(id, false, force);
 		} catch (DockerException | InterruptedException e) {
 			e.printStackTrace();
 		}

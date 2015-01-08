@@ -1,6 +1,7 @@
 package com.sap.sea.b1.client.island;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -24,6 +25,9 @@ public abstract class Island {
 	protected String path;
 	protected Docker docker;
 	private String host;
+	
+	protected SeaClient client;
+	protected Integer uid = null;
 
 	protected Island(String path) {
 		this.path = path;
@@ -55,7 +59,7 @@ public abstract class Island {
 
 	protected Docker docker(){
 		if (docker == null) {
-			docker = new Docker(this);
+			docker = new Docker(this,getUid());
 		}
 		return docker;
 	}
@@ -84,45 +88,63 @@ public abstract class Island {
 		return node().getMemUsage();
 	}
 
-	public List<String> removeImage(String id) {
-		return docker().removeImage(id);
+	public IslandAnchor<List<String>> removeImage(String id) {
+		return new IslandAnchor<List<String>>(docker().removeImage(id), convertToTargeted());
 	}
 
-	public List<Container> listContainers(ListContainersParam...para) {
-		return docker().listContainers(para);
+	public IslandAnchor<List<Container>> listContainers(ListContainersParam...para) {
+		return new IslandAnchor<List<Container>>(docker().listContainers(para), convertToTargeted());
+	}
+
+	public IslandAnchor<String> createContainer(ContainerConfig config,String name) {
+		ContainerCreation creation =  docker().createContainer(config,name);
+		return new IslandAnchor<String>(creation.id(), convertToTargeted());
+	}
+
+	public IslandAnchor<Void> removeContainer(String id) {
+		docker().removeContainer(id,false);
+		return new IslandAnchor<Void>(null, convertToTargeted());
+	}
+	
+	public IslandAnchor<Void> removeContainer(String id,boolean force) {
+		docker().removeContainer(id,force);
+		return new IslandAnchor<Void>(null, convertToTargeted());
+	}
+	
+	public IslandAnchor<Void> startContainer(String containerId, HostConfig hostConfig) {
+		docker().startContainer(containerId, hostConfig);
+		return new IslandAnchor<Void>(null, convertToTargeted());
+	}
+
+	public IslandAnchor<Void> stopContainer(String containerId) {
+		docker().stopContainer(containerId);
+		return new IslandAnchor<Void>(null, convertToTargeted());
+	}
+
+	public IslandAnchor<Void> pullImage(String name) {
+		docker().pullImage(name);
+		return new IslandAnchor<Void>(null, convertToTargeted());
+	}
+
+	public IslandAnchor<List<Image>> listImages(ListImagesParam... param) {
+		List<Image> images = docker().listImages(param);
+		return new IslandAnchor<List<Image>>(images, convertToTargeted());
+	}
+
+	public IslandAnchor<Void> tagImage(String name, String tag) {
+		docker().tagImage(name,tag);
+		return new IslandAnchor<Void>(null, convertToTargeted());
+	}
+
+	public IslandAnchor<Void> pushImage(String image) {
+		docker().pushImage(image);
+		return new IslandAnchor<Void>(null, convertToTargeted());			
 		
 	}
+	
+	abstract protected TargetedIsland convertToTargeted();
 
-	public String createContainer(ContainerConfig config,String name) {
-		ContainerCreation creation =  docker().createContainer(config,name);
-		return creation.id();
-	}
-
-	public void removeContainer(String id) {
-		docker().removeContainer(id);
-	}
-
-	public void startContainer(String containerId, HostConfig hostConfig) {
-		docker().startContainer(containerId, hostConfig);
-	}
-
-	public void stopContainer(String containerId) {
-		docker().stopContainer(containerId);
-	}
-
-	public void pullImage(String name) {
-		docker().pullImage(name);
-	}
-
-	public List<Image> listImages(ListImagesParam... param) {
-		return docker().listImages(param);
-	}
-
-	public void tagImage(String name, String tag) {
-		docker().tagImage(name,tag);
-	}
-
-	public void pushImage(String image) {
-		docker().pushImage(image);
+	public Integer getUid(){
+		return uid;
 	}
 }

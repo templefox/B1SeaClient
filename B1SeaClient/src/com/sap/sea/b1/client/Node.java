@@ -28,6 +28,7 @@ public class Node {
 	public Long getMemUsed() {
 		JerseyWebTarget target = SeaClient.jClient.target(path).path("/mem/used");
 		String str = target.request().get(String.class);
+		
 		Long used = Long.valueOf(str);
 		return used;
 	}

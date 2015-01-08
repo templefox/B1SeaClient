@@ -18,7 +18,7 @@ public class IslandImageTest {
 		SeaClient client = new SeaClient(IslandNodeTest.HOST);
 		Island island = client.getIsland(new IslandInfo("10.58.136.164:7777"));
 		
-		List<Image> images = island.listImages(ListImagesParam.allImages(false));
+		List<Image> images = island.listImages(ListImagesParam.allImages(false)).value();
 		
 		images.stream().forEach(image->Assert.assertTrue(image.id().length()>10));
 	}

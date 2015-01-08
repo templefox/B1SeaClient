@@ -17,15 +17,15 @@ public class PushAndPullTest {
 
 		String hello_image = "10.58.77.129:5000/hello";
 		
-		if (island.listImages().stream().anyMatch(image -> image.repoTags().stream().anyMatch(s->s.startsWith(hello_image)))) {
+		if (island.listImages().value().stream().anyMatch(image -> image.repoTags().stream().anyMatch(s->s.startsWith(hello_image)))) {
 			island.removeImage(hello_image);
 		}
 
-		Assert.assertFalse(island.listImages().stream().anyMatch(image -> image.repoTags().contains(hello_image)));
+		Assert.assertFalse(island.listImages().value().stream().anyMatch(image -> image.repoTags().contains(hello_image)));
 
 		island.pullImage(hello_image);
 
-		Assert.assertTrue(island.listImages().stream()
+		Assert.assertTrue(island.listImages().value().stream()
 				.anyMatch(image -> image.repoTags().stream().anyMatch(s -> s.startsWith(hello_image))));
 	}
 	
@@ -42,7 +42,7 @@ public class PushAndPullTest {
 		String tag = "10.58.77.129:5000/hello2";
 		island.tagImage(hello_image,tag);
 		
-		Assert.assertTrue(island.listImages().stream().anyMatch(i->i.repoTags().stream().anyMatch(s->s.startsWith(tag))));
+		Assert.assertTrue(island.listImages().value().stream().anyMatch(i->i.repoTags().stream().anyMatch(s->s.startsWith(tag))));
 	
 		island.pushImage(tag);
 	}

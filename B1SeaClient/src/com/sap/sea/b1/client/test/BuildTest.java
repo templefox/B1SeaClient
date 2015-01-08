@@ -54,7 +54,7 @@ public class BuildTest {
 		Assert.assertFalse(id == null);
 		Assert.assertFalse(id.isEmpty());
 
-		List<String> removedImages = island.removeImage(id);
+		List<String> removedImages = island.removeImage(id).value();
 		Assert.assertTrue(removedImages.get(0).startsWith(id));
 	}
 }
