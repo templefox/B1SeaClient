@@ -22,6 +22,10 @@ public class BuildLog {
 	public String getImageID(){
 		Matcher matcher = pattern.matcher(log);
 		matcher.find();
-		return matcher.group(1);
+		try {
+			return matcher.group(1);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

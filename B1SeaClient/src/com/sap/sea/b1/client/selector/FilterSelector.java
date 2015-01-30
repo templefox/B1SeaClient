@@ -9,6 +9,10 @@ public class FilterSelector extends Selector {
 		this.memGap = memGap;
 	}
 	
+	public FilterSelector(Integer memGap) {
+		this.memGap = memGap.longValue()*1024;
+	}
+	
 	@Override
 	public String getSubPath() {
 		return SUB_PATH+memGap.toString();

@@ -17,7 +17,7 @@ import com.spotify.docker.client.messages.Image;
 public class Inconstant2TargetedTest {
 	@Test
 	public void convertThroughListImages() {
-		SeaClient client = new SeaClient("localhost:8080/Sea");
+		SeaClient client = new SeaClient(IslandNodeTest.HOST);
 		Island randomIsland = client.select(new RandomSelector());
 
 		IslandAnchor<List<Image>> anchor1 = randomIsland.listImages();

@@ -1,7 +1,9 @@
 package com.sap.sea.b1.client.test;
 
 import org.junit.Assert;
+
 import static com.sap.sea.b1.client.test.IslandNodeTest.HOST;
+
 import org.junit.Test;
 
 import com.sap.sea.b1.client.SeaClient;
@@ -30,6 +32,8 @@ public class SelectorTest {
 		Assert.assertTrue(island.ping());
 		
 		InconstantIsland island2 = client.select(new FilterSelector(Long.MAX_VALUE));
+		new FilterSelector(1);
+		new FilterSelector(1L);
 		Assert.assertFalse(island2.ping());
 		
 	}

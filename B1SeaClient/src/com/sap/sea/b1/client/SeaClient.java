@@ -1,7 +1,6 @@
 package com.sap.sea.b1.client;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -14,8 +13,6 @@ import javax.ws.rs.core.Response.Status;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.JerseyWebTarget;
-import org.hamcrest.core.Is;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sea.b1.client.island.InconstantIsland;
@@ -118,6 +115,10 @@ public class SeaClient {
 
 	public TargetedIsland getIsland(IslandInfo info) {
 		return new TargetedIsland(this, info);
+	}
+	
+	public TargetedIsland getIsland(String host) {
+		return getIsland(new IslandInfo(host));
 	}
 
 	public InconstantIsland select(Selector selector) {
