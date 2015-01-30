@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+
+    <project name="b1seaClient" default="package" basedir=".">  
+        <path id="project.lib">  
+            <fileset dir="${basedir}/lib">  
+                <include name="**/*.jar"/>  
+            </fileset>
+        </path>
+		
+		<path id="junit.lib">  
+            <fileset dir="${basedir}">  
+                <include name="junit-4.11.jar"/>  
+            </fileset>
+        </path>
+		
+        <target name="clean">  
+            <delete dir="${basedir}/build" />  
+            <mkdir dir="${basedir}/build" />  
+        </target>  
+		
+		<target name="compile">  
+			<javac target="1.8" source="1.8" destdir="${basedir}/build" includeantruntime="false">  
+				<src path="${basedir}/src" />		
+				<exclude name="**/test/**"/>				
+				<classpath refid="project.lib" />		
+				<classpath refid="junit.lib" />
+			</javac>
+		</target> 
+        <target name="package" depends="compile">
+			<jar destfile="./B1SeaClient-All.jar" basedir="${basedir}/build">  
+				<zipgroupfileset dir="./lib" includes="**/*.jar"/>
+			</jar>
+        </target> 
+          
+    </project>  
